@@ -13,7 +13,7 @@ type Application struct {
 	GorpController
 }
 
-func (c Application) AddUser() revel.Result {
+func (c *Application) AddUser() revel.Result {
 	if user := c.connected(); user != nil {
 		c.RenderArgs["user"] = user
 	}
@@ -43,7 +43,7 @@ func (c *Application) getUser(username string) *models.User {
 
 func (c *Application) Index() revel.Result {
 	if c.connected() != nil {
-		return c.Redirect(routes.Games.Index())
+		return c.Redirect(routes.Servers.Index())
 	}
 	c.Flash.Error("Please log in first")
 	return c.Render()
@@ -74,7 +74,7 @@ func (c *Application) SaveUser(user models.User, verifyPassword string) revel.Re
 
 	c.Session["user"] = user.Username
 	c.Flash.Success("Welcome, " + user.Name)
-	return c.Redirect(routes.Games.Index())
+	return c.Redirect(routes.Servers.Index())
 }
 
 func (c *Application) Login(username, password string, remember bool) revel.Result {
@@ -89,7 +89,7 @@ func (c *Application) Login(username, password string, remember bool) revel.Resu
 				c.Session.SetNoExpiration()
 			}
 			c.Flash.Success("Welcome, " + username)
-			return c.Redirect(routes.Games.Index())
+			return c.Redirect(routes.Servers.Index())
 		}
 	}
 

@@ -5,10 +5,12 @@
 module:testrunner
 
 GET     /                                       Application.Index
-GET     /servers                                  Servers.Index
+GET     /servers                                Servers.Index
 
-GET		/register								Application.Register
+GET     /register                               Application.Register
 POST    /register                               Application.SaveUser
+
+GET		/admin                                    Admin.Index
 
 POST    /login                                  Application.Login
 GET     /logout                                 Application.Logout

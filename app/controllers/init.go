@@ -11,8 +11,11 @@ func init() {
 	revel.InterceptMethod((*GorpController).Rollback, revel.FINALLY)
 
 	// User Interceptors
-	revel.InterceptMethod(Games.checkUser, revel.BEFORE)
-	revel.InterceptMethod(Application.AddUser, revel.BEFORE)
+	revel.InterceptMethod((*Servers).checkUser, revel.BEFORE)
 
 	// Admin Interceptors
+	revel.InterceptMethod((*Admin).checkUser, revel.BEFORE)
+
+	// General Interceptors
+	revel.InterceptMethod((*Application).AddUser, revel.BEFORE)
 }

@@ -8,9 +8,14 @@ import (
 )
 
 const (
+	// User Model Consts
 	UserMaxUsernameLength int = 150
 	UserMaxNameLength     int = 20
 	UserMaxPasswordLength int = 40
+
+	// AccountType Model Consts
+	AccountTypeAdmin string = "ADMIN"
+	AccountTypeUser  string = "USER"
 )
 
 type User struct {
