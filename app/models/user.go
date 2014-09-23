@@ -9,15 +9,20 @@ import (
 
 const (
 	// User Model Consts
-	UserMaxUsernameLength int = 150
-	UserMaxNameLength     int = 20
-	UserMaxPasswordLength int = 40
+	UserMinUsernameLength int = 4
+	UserMaxUsernameLength int = 20
+	UserMaxNameLength     int = 40
+	UserMinPasswordLength int = 5
+	UserMaxPasswordLength int = 50
+	UserMaxEmailLength    int = 200
 
 	// AccountType Model Consts
-	AccountTypeAdminName string = "ADMIN"
-	AccountTypeAdminId   int    = 1
-	AccountTypeUserName  string = "USER"
-	AccountTypeUserId    int    = 2
+	UserAccountTypeAdmin string = "ADMIN"
+	UserAccountTypeUser  string = "USER"
+)
+
+var (
+	userRegex = regexp.MustCompile("^\\w*$")
 )
 
 type User struct {
@@ -25,7 +30,7 @@ type User struct {
 	Name           string
 	Username       string
 	Email          string
-	AccountType    int
+	AccountType    string
 	Password       string // This isn't persisted, but is here for databinding from the front-end
 	HashedPassword []byte
 }
@@ -40,13 +45,11 @@ func (u *User) String() string {
 	return fmt.Sprintf("User(%s)", u.Username)
 }
 
-var userRegex = regexp.MustCompile("^\\w*$")
-
 func (user *User) Validate(v *revel.Validation) {
 	v.Check(user.Username,
 		revel.Required{},
-		revel.MaxSize{15},
-		revel.MinSize{4},
+		revel.MaxSize{UserMaxUsernameLength},
+		revel.MinSize{UserMinUsernameLength},
 		revel.Match{userRegex},
 	)
 
@@ -55,14 +58,21 @@ func (user *User) Validate(v *revel.Validation) {
 
 	v.Check(user.Name,
 		revel.Required{},
-		revel.MaxSize{100},
+		revel.MaxSize{UserMaxNameLength},
 	)
+
+	v.Check(user.Email,
+		revel.Required{},
+		revel.MaxSize{UserMaxEmailLength},
+	)
+
+	v.Email(user.Email)
 }
 
 func ValidatePassword(v *revel.Validation, password string) *revel.ValidationResult {
 	return v.Check(password,
 		revel.Required{},
-		revel.MaxSize{15},
-		revel.MinSize{5},
+		revel.MaxSize{UserMaxPasswordLength},
+		revel.MinSize{UserMinPasswordLength},
 	)
 }

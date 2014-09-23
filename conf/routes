@@ -4,17 +4,39 @@
 
 module:testrunner
 
+# ===========================
+# General Web
+# ===========================
 GET     /                                       Application.Index
-GET     /servers                                Servers.Index
-
-GET     /register                               Application.Register
-POST    /register                               Application.SaveUser
-
-GET		/admin                                    Admin.Index
+GET     /u                                      Application.UserIndex
 
 POST    /login                                  Application.Login
 GET     /logout                                 Application.Logout
 
+GET     /register                               Application.Register
+POST    /register                               Application.SaveUser
+
+# ===========================
+ Servers Section (REST LIKE)
+# ===========================
+GET     /servers                                Servers.List
+GET     /servergames                            Servers.ListGames
+
+GET     /servers/:id                            Servers.Show
+DELETE  /servers/:id                            Servers.Delete
+
+GET     /servers/create                         Servers.New
+POST    /servers/create                         Servers.Create
+
+# ===========================
+# Admin Section
+# ===========================
+GET		  /admin                                  Admin.Index
+
+
+# ===========================
+# Misc Section
+# ===========================
 # Ignore favicon requests
 GET     /favicon.ico                            404
 

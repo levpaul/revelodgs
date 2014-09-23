@@ -30,9 +30,10 @@ func (c *Admin) checkUser() revel.Result {
 	if user == nil {
 		c.Flash.Error("Please log in first")
 		return c.Redirect(routes.Application.Index())
-	} else if c.isUserAdmin(user) == false {
+	}
+	if c.isUserAdmin(user) == false {
 		c.Flash.Error("Unauthorised")
-		return c.Redirect(routes.Servers.Index())
+		return c.Redirect(routes.Application.Index())
 	}
 	return nil
 }

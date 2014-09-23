@@ -1,12 +1,15 @@
 {{set . "title" "RPS App"}}
-{{set . "heading" "Games"}}
+{{set . "heading" "OD Gaming"}}
 {{template "header.html" .}}
-
 
 <div class="container">
   <div class="row">
     <div class="span6">
+
       {{template "flash.html" .}}
+      <p>
+        Welcome, {{.User.Name}}
+      </p>
     </div>
   </div>
 </div>

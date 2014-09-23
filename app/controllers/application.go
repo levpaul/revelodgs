@@ -42,10 +42,9 @@ func (c *Application) getUser(username string) *models.User {
 }
 
 func (c *Application) Index() revel.Result {
-	if c.connected() != nil {
-		return c.Redirect(routes.Servers.Index())
+	if u := c.connected(); u != nil {
+		return c.Redirect(routes.Application.UserIndex())
 	}
-	c.Flash.Error("Please log in first")
 	return c.Render()
 }
 
@@ -66,7 +65,7 @@ func (c *Application) SaveUser(user models.User, verifyPassword string) revel.Re
 	}
 
 	// Default to 'User' type of account
-	user.AccountType = models.AccountTypeUserId
+	user.AccountType = models.UserAccountTypeUser
 	user.HashedPassword, _ = bcrypt.GenerateFromPassword(
 		[]byte(user.Password), bcrypt.DefaultCost)
 	err := c.Txn.Insert(&user)
@@ -76,7 +75,7 @@ func (c *Application) SaveUser(user models.User, verifyPassword string) revel.Re
 
 	c.Session["user"] = user.Username
 	c.Flash.Success("Welcome, " + user.Name)
-	return c.Redirect(routes.Servers.Index())
+	return c.Redirect(routes.Application.UserIndex())
 }
 
 func (c *Application) Login(username, password string, remember bool) revel.Result {
@@ -91,7 +90,7 @@ func (c *Application) Login(username, password string, remember bool) revel.Resu
 				c.Session.SetNoExpiration()
 			}
 			c.Flash.Success("Welcome, " + username)
-			return c.Redirect(routes.Servers.Index())
+			return c.Redirect(routes.Application.UserIndex())
 		}
 	}
 
@@ -106,3 +105,15 @@ func (c *Application) Logout() revel.Result {
 	}
 	return c.Redirect(routes.Application.Index())
 }
+
+func (c *Application) UserIndex() revel.Result {
+	if User := c.connected(); User != nil {
+		return c.Render(User)
+	}
+	c.Flash.Error("Please log in first")
+	return c.Redirect(routes.Application.Index())
+}
+
+// func (c *Application) UserIndex() revel.Result {
+// 	return c.Render()
+// }
