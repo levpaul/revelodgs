@@ -65,6 +65,8 @@ func (c *Application) SaveUser(user models.User, verifyPassword string) revel.Re
 		return c.Redirect(routes.Application.Register())
 	}
 
+	// Default to 'User' type of account
+	user.AccountType = models.AccountTypeUserId
 	user.HashedPassword, _ = bcrypt.GenerateFromPassword(
 		[]byte(user.Password), bcrypt.DefaultCost)
 	err := c.Txn.Insert(&user)

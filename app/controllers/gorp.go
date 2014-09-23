@@ -34,7 +34,7 @@ func InitDB() {
 	t.ColMap("HashedPassword").SetNotNull(true)
 
 	// AccountType Table
-	t = Dbm.AddTable(models.AccountType{}).SetKeys(true, "AccountTypeId")
+	t = Dbm.AddTable(models.AccountType{}).SetKeys(false, "AccountTypeId")
 	t.ColMap("Name").SetMaxSize(50).SetNotNull(true)
 	t.ColMap("Description").SetMaxSize(500)
 

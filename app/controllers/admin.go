@@ -13,9 +13,10 @@ type Admin struct {
 }
 
 func (c *Admin) isUserAdmin(user *models.User) bool {
-	var result *models.User
-	err := c.Txn.SelectOne(result, `select u.* from user as u join accounttype as a where u.accounttype == a.accounttypeid and u.userid == ? and a.name == ?`, user.UserId, "ADMIN") //models.AccountTypeAdmin)
+	var result models.User
 
+	err := c.Txn.SelectOne(&result, `select u.* from user as u join accounttype as a where u.accounttype == a.accounttypeid and u.userid == ? and a.name == ?`, user.UserId, "ADMIN") //models.AccountTypeAdmin)
+	c.RenderArgs["User"] = result
 	if err != nil {
 		return false
 	} else {

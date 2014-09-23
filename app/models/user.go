@@ -14,8 +14,10 @@ const (
 	UserMaxPasswordLength int = 40
 
 	// AccountType Model Consts
-	AccountTypeAdmin string = "ADMIN"
-	AccountTypeUser  string = "USER"
+	AccountTypeAdminName string = "ADMIN"
+	AccountTypeAdminId   int    = 1
+	AccountTypeUserName  string = "USER"
+	AccountTypeUserId    int    = 2
 )
 
 type User struct {

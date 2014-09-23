@@ -29,6 +29,12 @@
 			      <span class="error">{{$field.Error}}</span>
 			    </p>
 			  {{end}}
+			  {{with $field := field "user.Email" .}}
+			    <p class="{{$field.ErrorClass}}">
+			      <strong>Email:</strong> <input type="text" name="{{$field.Name}}" size="16" value="{{$field.Flash}}"> *
+			      <span class="error">{{$field.Error}}</span>
+			    </p>
+			  {{end}}
 			  {{with $field := field "user.Password" .}}
 			    <p class="{{$field.ErrorClass}}">
 			      <strong>Password:</strong> <input type="password" name="{{$field.Name}}" size="16" value="{{$field.Flash}}"> *
