@@ -49,6 +49,9 @@ func (c *Application) Index() revel.Result {
 }
 
 func (c *Application) Register() revel.Result {
+	if u := c.connected(); u != nil {
+		return c.Redirect(routes.Application.UserIndex())
+	}
 	return c.Render()
 }
 
