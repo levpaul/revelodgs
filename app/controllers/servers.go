@@ -7,7 +7,7 @@ import (
 	"github.com/revel/revel"
 )
 
-// Responsible for managing interactions with servers
+// Responsible for managing interactions with servers in a REST like way
 type Servers struct {
 	Application
 }
@@ -21,19 +21,19 @@ func (c *Servers) checkUser() revel.Result {
 }
 
 func (c *Servers) List() revel.Result {
-	// results, err := c.Txn.Select(models.Game{},
-	// 	`select * from Game where UserOne = ? or UserTwo = ?`, c.connected().UserId, c.connected().UserId)
-	// if err != nil {
-	// 	panic(err)
-	// }
+	results, err := c.Txn.Select(models.Server{},
+		`select * from Server where userid = ?`, c.connected().UserId)
+	if err != nil {
+		panic(err)
+	}
 
-	// var Servers []*models.Game
-	// for _, r := range results {
-	// 	g := r.(*models.Game)
-	// 	Servers = append(Servers, g)
-	// }
+	var servers []*models.Server
+	for _, r := range results {
+		s := r.(*models.Server)
+		servers = append(servers, s)
+	}
 
-	return c.Render()
+	return c.RenderJson(servers)
 }
 
 func (c *Servers) ListGames() revel.Result {

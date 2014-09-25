@@ -2,6 +2,22 @@
 {{set . "heading" "OD Gaming"}}
 {{template "header.html" .}}
 
+<script>
+  function getServers(callback) {
+     jQuery.ajax({
+      url: "servers",
+      success: callback
+    });
+  }
+
+  getServers(function(results){
+    for (var i = 0; i < results.length; i++){
+      var rows = "<tr><td>" + results[i].GameId + "</td><td>" + results[i].State + "</td></tr>"
+      $('#serversTable > tbody:last').append(rows);
+    }
+  });
+</script>
+
 <div class="container">
   <div class="row">
     <div class="span6">
@@ -11,6 +27,14 @@
         Welcome, {{.User.Name}}
       </p>
     </div>
+    <table id="serversTable" class="table table-hover">
+      <tbody>
+        <tr>
+          <th>Game</th>
+          <th>Status</th>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </div>
 
