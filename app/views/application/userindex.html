@@ -1,8 +1,9 @@
 {{set . "title" "RPS App"}}
 {{set . "heading" "OD Gaming"}}
+{{append . "moreStyles" "css/userindex.css"}}
 {{template "header.html" .}}
 
-<script>
+<script type="text/javascript">
   function getServers(callback) {
      jQuery.ajax({
       url: "servers",
@@ -11,10 +12,18 @@
   }
 
   getServers(function(results){
+    // Add all servers to servers table
     for (var i = 0; i < results.length; i++){
-      var rows = "<tr><td>" + results[i].GameId + "</td><td>" + results[i].State + "</td></tr>"
+      var rows = "<tr><td>" + results[i].GameId + "</td><td>" + results[i].State + "</td><td class=\"serverIdCell\">" + results[i].ServerId + "</td></tr>"
       $('#serversTable > tbody:last').append(rows);
     }
+
+    // Add links to all servers
+    // TODO: Make the table row border still cross the entire width of the page, but just not show the serverId... the visbility:hidden style doesn't seem to be the best option for here
+    jQuery("tr").click(function(e){
+      var serverLink = "servers/" + $(this).find("td.serverIdCell").html()
+      location.href=serverLink
+    })
   });
 </script>
 

@@ -3,6 +3,7 @@ package models
 import "time"
 
 type Server struct {
+	ServerId   int
 	UserId     int
 	GameId     int
 	InstanceId string `json:"-"`

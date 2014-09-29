@@ -47,7 +47,7 @@ func InitDB() {
 	t.ColMap("Type").SetMaxSize(20).SetNotNull(true)
 
 	// Servers Table
-	t = Dbm.AddTable(models.Server{})
+	t = Dbm.AddTable(models.Server{}).SetKeys(true, "ServerId")
 	t.ColMap("UserId").SetNotNull(true)
 	t.ColMap("GameId").SetNotNull(true)
 	t.ColMap("InstanceId").SetMaxSize(12).SetNotNull(true)

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"errors"
 	"rps/app/models"
 	"rps/app/routes"
 
@@ -52,7 +53,19 @@ func (c *Servers) ListGames() revel.Result {
 }
 
 func (c *Servers) Show(id int) revel.Result {
-	return c.Render()
+	var server models.Server
+	err := c.Txn.SelectOne(&server,
+		`select * from Server where serverid = ? and userid = ?`, id, c.connected().UserId)
+
+	if err != nil {
+		if err.Error() == "sql: no rows in result set" {
+			// TODO: Tidy this up a little bit. Probably want to just bounce back to userIndex with a flash error "Unauthorised"
+			return c.RenderError(errors.New("Unauthorised"))
+		}
+		panic(err)
+	}
+
+	return c.RenderJson(server)
 }
 
 func (c *Servers) Delete(id int) revel.Result {
