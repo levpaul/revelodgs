@@ -60,9 +60,15 @@ func InitDB() {
 	Dbm.TraceOn("[gorp]", revel.INFO)
 	Dbm.CreateTablesIfNotExists()
 
-	// ===================================================
-	// POPULATE WITH TEST DATA
+	if revel.DevMode {
+		populateWithTestData()
+	}
+}
 
+/**
+POPULATE WITH TEST DATA
+*/
+func populateWithTestData() {
 	// Helper functions
 	checkErr := func(e error) {
 		uniqueConstraint := regexp.MustCompile("^UNIQUE constraint failed")
