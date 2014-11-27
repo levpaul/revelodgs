@@ -18,3 +18,15 @@ const (
 	ServerStateRunning string = "RUNNING"
 	ServerStateStopped string = "STOPPED"
 )
+
+// =============================================================================
+// DATABASE RESULT STRUCTS
+
+type ServerResult struct {
+	ServerId   int
+	ShortDesc  string
+	LaunchTime time.Time
+	ExpiryTime time.Time
+	State      string
+	Options    string
+}

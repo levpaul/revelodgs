@@ -39,7 +39,7 @@ func InitDB() {
 	t.ColMap("HashedPassword").SetNotNull(true)
 
 	// Game Table
-	t = Dbm.AddTable(models.Game{}).SetKeys(false, "Name")
+	t = Dbm.AddTable(models.Game{}).SetKeys(true, "GameId")
 	t.ColMap("Name").SetMaxSize(10)
 	t.ColMap("AmiId").SetMaxSize(15).SetNotNull(true)
 	t.ColMap("ShortDesc").SetMaxSize(50).SetNotNull(true)

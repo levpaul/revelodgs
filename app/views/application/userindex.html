@@ -14,7 +14,7 @@
   getServers(function(results){
     // Add all servers to servers table
     for (var i = 0; i < results.length; i++){
-      var rows = "<tr><td>" + results[i].GameId + "</td><td>" + results[i].State + "</td><td class=\"serverIdCell\">" + results[i].ServerId + "</td></tr>"
+      var rows = "<tr><td>" + results[i].ShortDesc + "</td><td>" + results[i].State + "</td><td class=\"serverIdCell\">" + results[i].ServerId + "</td></tr>"
       $('#serversTable > tbody:last').append(rows);
     }
 

@@ -1,6 +1,7 @@
 package models
 
 type Game struct {
+	GameId    int
 	Name      string
 	ShortDesc string
 	LongDesc  string

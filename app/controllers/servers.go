@@ -22,15 +22,15 @@ func (c *Servers) checkUser() revel.Result {
 }
 
 func (c *Servers) List() revel.Result {
-	results, err := c.Txn.Select(models.Server{},
-		`select * from Server where userid = ?`, c.connected().UserId)
+	results, err := c.Txn.Select(models.ServerResult{},
+		"SELECT s.ServerId, g.ShortDesc, s.LaunchTime, s.ExpiryTime, s.State, s.Options FROM Game as 'g' JOIN Server as 's' WHERE s.UserId = ? AND g.GameId = s.GameId", c.connected().UserId)
 	if err != nil {
 		panic(err)
 	}
 
-	var servers []*models.Server
+	var servers []*models.ServerResult
 	for _, r := range results {
-		s := r.(*models.Server)
+		s := r.(*models.ServerResult)
 		servers = append(servers, s)
 	}
 
