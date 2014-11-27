@@ -25,6 +25,8 @@ func (c *Admin) isUserAdmin(user *models.User) bool {
 
 }
 
+/* Checks if a user is connected, then makes sure that the user
+ *  is an admin user. */
 func (c *Admin) checkUser() revel.Result {
 	user := c.connected()
 	if user == nil {
