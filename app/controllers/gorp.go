@@ -9,7 +9,7 @@ import (
 
 	"github.com/coopernurse/gorp"
 	_ "github.com/mattn/go-sqlite3"
-	r "github.com/revel/revel"
+	"github.com/revel/revel"
 	"github.com/revel/revel/modules/db/app"
 
 	"time"
@@ -21,7 +21,7 @@ var (
 
 // Db aspect of controllers, other ctrls should inherit
 type GorpController struct {
-	*r.Controller
+	*revel.Controller
 	Txn *gorp.Transaction
 }
 
@@ -57,7 +57,7 @@ func InitDB() {
 	t.ColMap("AmiId").SetMaxSize(12).SetNotNull(true)
 	t.ColMap("Options").SetMaxSize(300)
 
-	Dbm.TraceOn("[gorp]", r.INFO)
+	Dbm.TraceOn("[gorp]", revel.INFO)
 	Dbm.CreateTablesIfNotExists()
 
 	// ===================================================
@@ -113,7 +113,7 @@ func InitDB() {
 	insertServer(server)
 }
 
-func (c *GorpController) Begin() r.Result {
+func (c *GorpController) Begin() revel.Result {
 	txn, err := Dbm.Begin()
 	if err != nil {
 		panic(err)
@@ -122,7 +122,7 @@ func (c *GorpController) Begin() r.Result {
 	return nil
 }
 
-func (c *GorpController) Commit() r.Result {
+func (c *GorpController) Commit() revel.Result {
 	if c.Txn == nil {
 		return nil
 	}
@@ -133,7 +133,7 @@ func (c *GorpController) Commit() r.Result {
 	return nil
 }
 
-func (c *GorpController) Rollback() r.Result {
+func (c *GorpController) Rollback() revel.Result {
 	if c.Txn == nil {
 		return nil
 	}
